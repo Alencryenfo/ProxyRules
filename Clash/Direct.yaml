@@ -4,3 +4,4 @@ payload:
   - GEOIP,PRIVATE,no-resolve
   - DOMAIN-SUFFIX,apple.com
   - DOMAIN-SUFFIX,icloud.com
+  - DOMAIN-SUFFIX,apple-cloudkit.com
