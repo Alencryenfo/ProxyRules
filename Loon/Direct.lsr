@@ -1,0 +1,5 @@
+USER-AGENT,"*123pan*"
+USER-AGENT,"OneDrive*"
+
+GEOIP,CN,no-resolve
+GEOIP,PRIVATE,no-resolve

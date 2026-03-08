@@ -1,2 +1,3 @@
 payload:
   - DOMAIN-SUFFIX,nwpu.edu.cn
+  - IP-CIDR,47.94.143.181
