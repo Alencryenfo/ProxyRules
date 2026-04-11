@@ -7,3 +7,4 @@ payload:
   - DOMAIN-SUFFIX,apple-cloudkit.com
   - DOMAIN-SUFFIX,cx.mnmn.fyi
   - DOMAIN-SUFFIX,cc.mnmn.fyi
+  - IP-CIDR,112.111.7.74
