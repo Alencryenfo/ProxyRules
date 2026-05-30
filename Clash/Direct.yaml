@@ -5,8 +5,6 @@ payload:
   - DOMAIN-SUFFIX,apple.com
   - DOMAIN-SUFFIX,icloud.com
   - DOMAIN-SUFFIX,apple-cloudkit.com
-  - DOMAIN-SUFFIX,cx.mnmn.fyi
-  - DOMAIN-SUFFIX,cc.mnmn.fyi
   - IP-CIDR,112.111.7.74
   - DOMAIN-SUFFIX,mcp.withwandb.com
   - DOMAIN-SUFFIX,zhihuishu.com
