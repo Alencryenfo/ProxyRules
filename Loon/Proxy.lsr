@@ -1,2 +1,2 @@
-OR,((USER-AGENT,"codex*"),(USER-AGENT,"ChatGPT*"),(DOMAIN-KEYWORD,oai),(DOMAIN-KEYWORD,chatgpt),(DOMAIN-KEYWORD,openai))
+OR,((DOMAIN-SUFFIX,openai.com),(DOMAIN-SUFFIX,chatgpt.com),(DOMAIN-SUFFIX,oaistatic.com),(DOMAIN-SUFFIX,oaiusercontent.com),(DOMAIN-KEYWORD,openai),(DOMAIN-KEYWORD,chatgpt),(USER-AGENT,ChatGPT*),(USER-AGENT,codex*))
 USER-AGENT,"com.google.gemini*"

@@ -8,3 +8,4 @@ payload:
   - IP-CIDR,112.111.7.74
   - DOMAIN-SUFFIX,mcp.withwandb.com
   - DOMAIN-SUFFIX,zhihuishu.com
+  - DOMAIN-SUFFIX,axonhub.mnmn.fyi
