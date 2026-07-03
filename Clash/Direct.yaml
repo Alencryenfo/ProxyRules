@@ -1,5 +1,5 @@
 payload:
-  - IP-CIDR,47.94.143.181
+  - IP-CIDR,47.94.143.181/32,no-resolve
   - GEOIP,CN,no-resolve
   - GEOIP,PRIVATE,no-resolve
   - DOMAIN-SUFFIX,apple.com
