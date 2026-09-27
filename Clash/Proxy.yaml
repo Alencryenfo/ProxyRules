@@ -3,7 +3,6 @@ payload:
   - DOMAIN-SUFFIX,kagi.com
   - DOMAIN-SUFFIX,kagiproxy.com
   - DOMAIN-SUFFIX,kagisuggest.com
-  - DOMAIN-SUFFIX,feiniaoyun.xyz
   - DOMAIN-SUFFIX,warp.dev
   - DOMAIN-SUFFIX,overleafusercontent.com
   - DOMAIN-SUFFIX,micuapi.ai
@@ -25,3 +24,5 @@ payload:
   - DOMAIN-SUFFIX,simplexonflux.com
   - DOMAIN-SUFFIX,rclone.org
   - DOMAIN-SUFFIX,78code.cc
+  - DOMAIN-SUFFIX,craft.do,PROXY
+  - DOMAIN-SUFFIX,craft.me,PROXY
