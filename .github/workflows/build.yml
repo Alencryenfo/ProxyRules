@@ -1,0 +1,83 @@
+name: Build rules
+
+on:
+  schedule:
+    - cron: "0 20 * * *" # UTC 20:00 = 北京时间 04:00
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - Clash/**
+      - Loon/**
+      - sources.yaml
+      - scripts/**
+      - .github/workflows/build.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-rules
+  cancel-in-progress: false
+
+env:
+  PUBLISH_BRANCH: ruleset
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pyyaml
+
+      - name: Install mihomo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          url=$(gh api repos/MetaCubeX/mihomo/releases/latest \
+            --jq '.assets[] | select(.name | test("^mihomo-linux-amd64-v[0-9.]+\\.gz$")) | .browser_download_url')
+          curl -fsSL "$url" | gunzip > mihomo
+          chmod +x mihomo
+          ./mihomo -v
+
+      - name: Build
+        env:
+          MIHOMO_BIN: ${{ github.workspace }}/mihomo
+        run: python scripts/build.py out
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git clone --depth 1 --branch "$PUBLISH_BRANCH" "https://github.com/${{ github.repository }}.git" prev 2>/dev/null \
+             && diff -r -x .git prev out >/dev/null; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "规则无变化，跳过发布"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish
+        if: steps.diff.outputs.changed == 'true'
+        working-directory: out
+        run: |
+          git init -b "$PUBLISH_BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Build rules $(date -u +%F)"
+          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          git push --force origin "$PUBLISH_BRANCH"
+
+      - name: Purge jsDelivr cache
+        if: steps.diff.outputs.changed == 'true'
+        continue-on-error: true
+        run: |
+          cd out
+          for f in $(find . -type f | sed 's|^\./||'); do
+            curl -fsS "https://purge.jsdelivr.net/gh/${{ github.repository }}@$PUBLISH_BRANCH/$f" >/dev/null || true
+          done

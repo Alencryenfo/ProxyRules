@@ -1,0 +1,46 @@
+{
+    "name": "${localWorkspaceFolderBasename}",
+
+    "image": "dev_container:default",
+    "remoteUser": "dev",
+    "updateRemoteUserUID": false,
+    "init": true,
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "runArgs": [
+        "--cpus=2",
+        "--memory=4g",
+        "--memory-swap=-1",
+        "--pids-limit=4096",
+        "--restart=unless-stopped",
+        "--label=dev.project=${localWorkspaceFolderBasename}",
+        "--name=ProxyRules",
+        "--add-host=host.docker.internal:host-gateway"
+    ],
+    "mounts": ["source=ProxyRules,target=/home,type=volume"],
+    "containerEnv": {},
+    "remoteEnv": {
+        "COLORTERM": "truecolor"
+    },
+    "forwardPorts": [],
+    "portsAttributes": {},
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "files.watcherExclude": {
+                    "**/.git/objects/**": true,
+                    "**/.venv/**": true
+                }
+            },
+            "extensions": [
+                "MS-CEINTL.vscode-language-pack-zh-hans",
+                "donjayamanne.githistory",
+                "cweijan.vscode-office",
+                "github.vscode-github-actions",
+                "GitHub.vscode-pull-request-github",
+                "anthropic.claude-code"
+            ]
+        }
+    }
+}

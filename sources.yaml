@@ -1,0 +1,246 @@
+# 规则集定义：每个集合由上游规则 + 自定义规则合并而成
+# upstream: 上游地址（Clash 格式，构建时同时转换成 Loon）
+# custom:   仓库内自定义规则，按平台分开，和上游一起合并去重排序；可写单个路径或列表
+#           Loon 同时读取 Clash 自定义（域名/IP 通用）和 Loon 专有规则（如 USER-AGENT）
+# min_rules: 去重后最少规则数，低于此值视为上游异常，中止发布
+
+sets:
+  ad:
+    min_rules: 5000
+    upstream:
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EasyPrivacy/EasyPrivacy_Classical.yaml
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hijacking/Hijacking.yaml
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingMiTV/AdvertisingMiTV.yaml
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt
+      - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
+      - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list
+      - https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml
+
+  ai:
+    min_rules: 30
+    upstream:
+      - https://raw.githubusercontent.com/viewer12/OverseasAI.list/main/rule/Clash/OverseasAI/OverseasAI.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.list
+      # Grok / xAI
+      - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/xai.yaml
+      # 海外 AI 总集
+      - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.yaml
+
+  cloud-drive:
+    min_rules: 30
+    upstream:
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleDrive/GoogleDrive.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OneDrive/OneDrive.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Dropbox/Dropbox.list
+      - https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/mega.yaml
+
+  social:
+    min_rules: 50
+    upstream:
+      - https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/meta/socialmedia.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Instagram/Instagram.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Facebook/Facebook.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Reddit/Reddit.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list
+
+  streaming:
+    min_rules: 50
+    upstream:
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AmazonPrimeVideo/AmazonPrimeVideo.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitch/Twitch.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/HBO/HBO.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hulu/Hulu.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleTV/AppleTV.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ParamountPlus/ParamountPlus.list
+
+  # 推送服务：全部走代理，规则里必须排在 direct 之前，
+  # 否则 push.apple.com 会先被 direct 里的 apple.com 命中
+  push:
+    min_rules: 20
+    custom:
+      clash: Clash/Push.yaml
+      loon: Clash/Push.yaml
+    upstream:
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.list
+
+  direct:
+    min_rules: 3000
+    custom:
+      clash: Clash/Direct.yaml
+      loon: [Clash/Direct.yaml, Loon/Direct.lsr]
+    upstream:
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_Classical.yaml
+      - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.list
+
+  proxy:
+    min_rules: 2000
+    # 上游 Global 等把下列域名收进了代理，这里剔除，让它们走 direct：
+    # Apple / iCloud、国内云厂商海外节点、Spotify。
+    # 自定义的 push.apple.com 等推送域名仍保留在 proxy
+    exclude:
+      - DOMAIN-SUFFIX,apple.com
+      - DOMAIN,apple-tv-plus-press.apple.com
+      - DOMAIN,hls-amt.itunes.apple.com
+      - DOMAIN,hls.itunes.apple.com
+      - DOMAIN,np-edge.itunes.apple.com
+      - DOMAIN,play-edge.itunes.apple.com
+      - DOMAIN,time.apple.com
+      - DOMAIN,time.asia.apple.com
+      - DOMAIN,time.euro.apple.com
+      - DOMAIN,uts-api.itunes.apple.com
+      - DOMAIN-SUFFIX,ae-ad-1.myhuaweicloud.com
+      - DOMAIN-SUFFIX,af-north-1.myhuaweicloud.com
+      - DOMAIN-SUFFIX,ap-bangkok.myqcloud.com
+      - DOMAIN-SUFFIX,ap-bangkok.tencentcos.com
+      - DOMAIN-SUFFIX,ap-hongkong.myqcloud.com
+      - DOMAIN-SUFFIX,ap-hongkong.tencentcos.com
+      - DOMAIN-SUFFIX,ap-jakarta.myqcloud.com
+      - DOMAIN-SUFFIX,ap-jakarta.tencentcos.com
+      - DOMAIN-SUFFIX,ap-mumbai.myqcloud.com
+      - DOMAIN-SUFFIX,ap-mumbai.tencentcos.com
+      - DOMAIN-SUFFIX,ap-seoul.myqcloud.com
+      - DOMAIN-SUFFIX,ap-seoul.tencentcos.com
+      - DOMAIN-SUFFIX,ap-singapore.myqcloud.com
+      - DOMAIN-SUFFIX,ap-singapore.tencentcos.com
+      - DOMAIN-SUFFIX,ap-southeast-4.myhuaweicloud.com
+      - DOMAIN-SUFFIX,ap-tokyo.myqcloud.com
+      - DOMAIN-SUFFIX,ap-tokyo.tencentcos.com
+      - DOMAIN-SUFFIX,apple-cloudkit.com
+      - DOMAIN-SUFFIX,apple-dns.com
+      - DOMAIN-SUFFIX,apple-dns.net
+      - DOMAIN-SUFFIX,apple-livephotoskit.com
+      - DOMAIN-SUFFIX,apple-mapkit.com
+      - DOMAIN-SUFFIX,apple.news
+      - DOMAIN-SUFFIX,ca.file.myqcloud.com
+      - DOMAIN-SUFFIX,cosca.myqcloud.com
+      - DOMAIN-SUFFIX,cosger.myqcloud.com
+      - DOMAIN-SUFFIX,coshk.myqcloud.com
+      - DOMAIN-SUFFIX,cossgp.myqcloud.com
+      - DOMAIN-SUFFIX,developer.apple.com
+      - DOMAIN-SUFFIX,developerservices2.apple.com
+      - DOMAIN-SUFFIX,devimages-cdn.apple.com
+      - DOMAIN-SUFFIX,devstreaming-cdn.apple.com
+      - DOMAIN-SUFFIX,eu-frankfurt.myqcloud.com
+      - DOMAIN-SUFFIX,eu-frankfurt.tencentcos.com
+      - DOMAIN-SUFFIX,eu-moscow.myqcloud.com
+      - DOMAIN-SUFFIX,eu-moscow.tencentcos.com
+      - DOMAIN-SUFFIX,eu-west-101.myhuaweicloud.com
+      - DOMAIN-SUFFIX,ger.file.myqcloud.com
+      - DOMAIN-SUFFIX,hk.file.myqcloud.com
+      - DOMAIN-SUFFIX,icloud-content.com
+      - DOMAIN-SUFFIX,icloud-isupport.com
+      - DOMAIN-SUFFIX,icloud-sandbox.com
+      - DOMAIN-SUFFIX,icloud.ch
+      - DOMAIN-SUFFIX,icloud.com
+      - DOMAIN-SUFFIX,icloud.de
+      - DOMAIN-SUFFIX,icloud.ee
+      - DOMAIN-SUFFIX,icloud.fi
+      - DOMAIN-SUFFIX,icloud.fr
+      - DOMAIN-SUFFIX,icloud.hu
+      - DOMAIN-SUFFIX,icloud.ie
+      - DOMAIN-SUFFIX,icloud.is
+      - DOMAIN-SUFFIX,icloud.jp
+      - DOMAIN-SUFFIX,icloud.lv
+      - DOMAIN-SUFFIX,icloud.om
+      - DOMAIN-SUFFIX,icloud.org
+      - DOMAIN-SUFFIX,icloud.pt
+      - DOMAIN-SUFFIX,icloud.ro
+      - DOMAIN-SUFFIX,icloud.se
+      - DOMAIN-SUFFIX,icloud.si
+      - DOMAIN-SUFFIX,icloud.sk
+      - DOMAIN-SUFFIX,icloud.vn
+      - DOMAIN-SUFFIX,icloudads.net
+      - DOMAIN-SUFFIX,icloudbox.net
+      - DOMAIN-SUFFIX,icloudbrowser.net
+      - DOMAIN-SUFFIX,icloude.com
+      - DOMAIN-SUFFIX,icloudhome.com
+      - DOMAIN-SUFFIX,icloudmail.net
+      - DOMAIN-SUFFIX,icloudmusic.net
+      - DOMAIN-SUFFIX,icloudnet.net
+      - DOMAIN-SUFFIX,icloudo.com
+      - DOMAIN-SUFFIX,icloudo.de
+      - DOMAIN-SUFFIX,icloudo.net
+      - DOMAIN-SUFFIX,icloudos.de
+      - DOMAIN-SUFFIX,icloudos.net
+      - DOMAIN-SUFFIX,icloudpay.net
+      - DOMAIN-SUFFIX,icloudsecure.net
+      - DOMAIN-SUFFIX,icloudsetup.com
+      - DOMAIN-SUFFIX,majsoul-hk-client.cn-hongkong.log.aliyuncs.com
+      - DOMAIN-SUFFIX,me-east-1.myhuaweicloud.com
+      - DOMAIN-SUFFIX,my-kualalumpur-1.myhuaweicloud.com
+      - DOMAIN-SUFFIX,mzstatic.com
+      - DOMAIN-SUFFIX,na-ashburn.myqcloud.com
+      - DOMAIN-SUFFIX,na-ashburn.tencentcos.com
+      - DOMAIN-SUFFIX,na-siliconvalley.myqcloud.com
+      - DOMAIN-SUFFIX,na-siliconvalley.tencentcos.com
+      - DOMAIN-SUFFIX,na-toronto.myqcloud.com
+      - DOMAIN-SUFFIX,na-toronto.tencentcos.com
+      - DOMAIN-SUFFIX,oss-ap-northeast-1.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-ap-northeast-2.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-ap-south-1.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-ap-southeast-1.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-ap-southeast-2.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-ap-southeast-3.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-ap-southeast-5.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-ap-southeast-6.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-ap-southeast-7.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-cn-hongkong.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-eu-central-1.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-eu-west-1.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-me-east-1.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-us-east-1.aliyuncs.com
+      - DOMAIN-SUFFIX,oss-us-west-1.aliyuncs.com
+      - DOMAIN-SUFFIX,playgrounds-cdn.apple.com
+      - DOMAIN-SUFFIX,ru-moscow-1.myhuaweicloud.com
+      - DOMAIN-SUFFIX,sa-saopaulo.myqcloud.com
+      - DOMAIN-SUFFIX,sa-saopaulo.tencentcos.com
+      - DOMAIN-SUFFIX,scdn.co
+      - DOMAIN-SUFFIX,sgp.file.myqcloud.com
+      - DOMAIN-SUFFIX,spoti.fi
+      - DOMAIN-SUFFIX,timestamp.apple.com
+      - DOMAIN-SUFFIX,tr-west-1.myhuaweicloud.com
+    custom:
+      clash: Clash/Proxy.yaml
+      loon: [Clash/Proxy.yaml, Loon/Proxy.lsr]
+    upstream:
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/greatfire.txt
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Classical.yaml
+      # Telegram IP 段
+      - https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt
+      # 开发
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Developer/Developer.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Cloudflare/Cloudflare.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest.list
+      # 微软
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.list
+      # 其他
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PayPal/PayPal.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Crypto/Crypto.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Wikipedia/Wikipedia.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Scholar/Scholar.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Notion/Notion.list
+      # 游戏
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list
+      - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.list
