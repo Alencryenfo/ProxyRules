@@ -1,0 +1,24 @@
+# 自定义拦截规则，构建时合并到 ad 规则集（Clash / Loon 共用）
+# 示例：
+#   - DOMAIN,ads.example.com
+#   - DOMAIN-SUFFIX,example.com
+#   记录一些运营商、厂商、第三方 SDK 的域名，阻断非法或未知的监控行为
+payload:
+    - DOMAIN-SUFFIX,gjfzpt.cn
+#信通院
+    - DOMAIN-SUFFIX,caict.ac.cn
+#疑似公安部基站定位
+    - DOMAIN-SUFFIX,weizhi.com
+#三大运营商遥测
+    - DOMAIN-SUFFIX,dm.wo.com.cn
+    - DOMAIN-SUFFIX,dm.10086.cn
+    - DOMAIN-SUFFIX,dm.189.cn
+#Vivo系遥测
+    - DOMAIN-SUFFIX,browserconf.vivo.com.cn
+    - DOMAIN-SUFFIX,f-up.vivo.com.cn
+    - DOMAIN-SUFFIX,f-up.vivo.com.cn
+    - DOMAIN-SUFFIX,ro-up.vivo.com.cn
+    - DOMAIN-SUFFIX,err-up.vivo.com.cn    
+    - DOMAIN-SUFFIX,one-log.vivo.com.cn
+    - DOMAIN-SUFFIX,ue.vivo.com.cn
+    - DOMAIN-SUFFIX,daup.map.baidu.com
