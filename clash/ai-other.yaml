@@ -1,0 +1,12 @@
+payload:
+  - 'IP-ASN,14061,no-resolve'
+  - 'IP-ASN,20473,no-resolve'
+  - 'DOMAIN-KEYWORD,bedrock'
+  - 'DOMAIN-KEYWORD,chatgpt-async-webps'
+  - 'DOMAIN-KEYWORD,colab'
+  - 'DOMAIN-KEYWORD,developerprofiles'
+  - 'DOMAIN-KEYWORD,generativeai'
+  - 'DOMAIN-KEYWORD,generativelanguage'
+  - 'DOMAIN-KEYWORD,openai'
+  - 'DOMAIN-KEYWORD,paypal'
+  - 'DOMAIN-KEYWORD,stripe'
