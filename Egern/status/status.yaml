@@ -1,11 +1,11 @@
 name: "代理状态总览"
-description: "查看本机网络、直连出口，以及两个策略组的出口 IP 和延迟"
+description: "本机网络与直连出口，以及两个策略组的出口、延迟和服务可达性"
 
 scriptings:
   - generic:
       name: "status"
       script_url: "https://raw.githubusercontent.com/Alencryenfo/ProxyRules/main/Egern/status/status.js"
-      timeout: 20
+      timeout: 30
 
 widgets:
   - name: "代理状态总览"
@@ -17,5 +17,11 @@ widgets:
       # 小组件上显示的名称，留空则使用策略组名称
       NAME_1: ""
       NAME_2: ""
-      # 延迟检测地址，留空使用 https://www.gstatic.com/generate_204
+      # 服务检测，英文逗号分隔，最多 5 项，留空使用默认值
+      # 可选：chatgpt claude gemini youtube netflix disney github
+      SERVICES_1: ""
+      SERVICES_2: ""
+      # 策略组延迟检测地址，留空使用 http://www.gstatic.com/generate_204
       CHECK_URL: ""
+      # 填 1 后 IP 只显示前两段，便于截图分享
+      MASK_IP: ""
