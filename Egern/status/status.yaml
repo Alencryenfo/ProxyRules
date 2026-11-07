@@ -1,0 +1,21 @@
+name: "代理状态总览"
+description: "查看本机网络、直连出口，以及两个策略组的出口 IP 和延迟"
+
+scriptings:
+  - generic:
+      name: "status"
+      script_url: "https://raw.githubusercontent.com/Alencryenfo/ProxyRules/main/Egern/status/status.js"
+      timeout: 20
+
+widgets:
+  - name: "代理状态总览"
+    script_name: "status"
+    env:
+      # 策略组名称必须与 Egern 配置中的 name 完全一致，留空则显示“未配置”
+      POLICY_1: ""
+      POLICY_2: ""
+      # 小组件上显示的名称，留空则使用策略组名称
+      NAME_1: ""
+      NAME_2: ""
+      # 延迟检测地址，留空使用 https://www.gstatic.com/generate_204
+      CHECK_URL: ""
