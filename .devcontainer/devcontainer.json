@@ -1,10 +1,10 @@
 {
     "name": "${localWorkspaceFolderBasename}",
-
     "image": "dev_container:default",
     "remoteUser": "dev",
     "updateRemoteUserUID": false,
     "init": true,
+    "overrideCommand": false,
     "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "runArgs": [
@@ -15,6 +15,8 @@
         "--restart=unless-stopped",
         "--label=dev.project=${localWorkspaceFolderBasename}",
         "--name=ProxyRules",
+       	"--hostname=ProxyRules",
+        "--publish=100.64.0.1:56704:45367",
         "--add-host=host.docker.internal:host-gateway"
     ],
     "mounts": ["source=ProxyRules,target=/home,type=volume"],

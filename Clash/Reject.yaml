@@ -22,3 +22,8 @@ payload:
     - DOMAIN-SUFFIX,one-log.vivo.com.cn
     - DOMAIN-SUFFIX,ue.vivo.com.cn
     - DOMAIN-SUFFIX,daup.map.baidu.com
+# Bilibili PCDN
+    - DOMAIN-WILDCARD,*pcdn*.biliapi.net
+    - DOMAIN-SUFFIX,mcdn.bilivideo.cn
+    - DOMAIN-SUFFIX,mcdn.bilivideo.com
+    - DOMAIN-SUFFIX,mountaintoys.cn
