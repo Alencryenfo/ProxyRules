@@ -6,6 +6,7 @@ payload:
   - DOMAIN-SUFFIX,warp.dev
   - DOMAIN-SUFFIX,overleafusercontent.com
   - DOMAIN-SUFFIX,micuapi.ai
+  - DOMAIN-SUFFIX,t3.codes
 
   - DOMAIN-SUFFIX,rclone.org
   - DOMAIN-SUFFIX,78code.cc
