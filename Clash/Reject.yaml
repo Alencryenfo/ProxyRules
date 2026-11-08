@@ -16,9 +16,8 @@ payload:
 #Vivo系遥测
     - DOMAIN-SUFFIX,browserconf.vivo.com.cn
     - DOMAIN-SUFFIX,f-up.vivo.com.cn
-    - DOMAIN-SUFFIX,f-up.vivo.com.cn
     - DOMAIN-SUFFIX,ro-up.vivo.com.cn
-    - DOMAIN-SUFFIX,err-up.vivo.com.cn    
+    - DOMAIN-SUFFIX,err-up.vivo.com.cn
     - DOMAIN-SUFFIX,one-log.vivo.com.cn
     - DOMAIN-SUFFIX,ue.vivo.com.cn
     - DOMAIN-SUFFIX,daup.map.baidu.com
